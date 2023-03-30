@@ -5,6 +5,7 @@ export const TASKS_FETCH_REJECTED = 'TASKS_FETCH_REJECTED';
 export const TASKS_FETCH_EDIT = 'TASKS_FETCH_EDIT';
 export const TASKS_FETCH_TOGGLED = 'TASKS_FETCH_TOGGLED';
 export const TASKS_FETCH_SEEALL = 'TASKS_FETCH_SEEALL';
+export const VISUALIZZA_TUTTO='VISUALIZZA_TUTTO';
 
 export const actionTypes = {
     TASKS_FETCH_ADD,
@@ -13,7 +14,9 @@ export const actionTypes = {
     TASKS_FETCH_REJECTED,
     TASKS_FETCH_EDIT,
     TASKS_FETCH_TOGGLED,
-    TASKS_FETCH_SEEALL
+    TASKS_FETCH_SEEALL,
+    
+    VISUALIZZA_TUTTO
   };
 
   
@@ -51,6 +54,10 @@ export const tasksFetchAdd = (id,text) => ({
   export const tasksFetchSeeAll = () => ({
     type: TASKS_FETCH_SEEALL   
   });
+    export const visualizzaTutto=()=>({
+    type:VISUALIZZA_TUTTO
+    });
+  
   
   export const actions = {
     tasksFetchAdd,
@@ -59,5 +66,6 @@ export const tasksFetchAdd = (id,text) => ({
     tasksFetchRejected,
     tasksFetchEdit,
     tasksFetchToggle,
-    tasksFetchSeeAll
+    tasksFetchSeeAll,
+    visualizzaTutto
   };

@@ -35,9 +35,11 @@ class App extends Component {
     this.setState({ tasks: taskk })
   }
 
-
-dispatch = useDispatch();
-selector= useSelector(state=>state.reducer)
+  // export type RootState = ReturnType<typeof store.getState>
+  // // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+  // export type AppDispatch = typeof store.dispatch
+//dispatch = useDispatch();
+//selector= useSelector(state=>state.reducer)  //////////////////////////////////
 
     //EDITO UNA TASK
     editTask = (id, newName) => {
@@ -56,7 +58,6 @@ selector= useSelector(state=>state.reducer)
         });
     }
   
-    // const [tasks, setTasks] = useState(props.tasks);
     //AGGIUNGO UNA TASK
     addTask = (idAdd, nameAdd) => {
       axios.post('http://localhost:3005/api/todo/add', { id: idAdd, name: nameAdd }, {
@@ -70,8 +71,7 @@ selector= useSelector(state=>state.reducer)
         })
         .catch(function (error) {
           console.log(error);
-        });                //aggiunge task
-      //alert("task "+ name +" aggiunta");
+        });
     }
   
     //SETTO COMPLETED A TRUE PER TUTTE LE TASK
@@ -81,7 +81,6 @@ selector= useSelector(state=>state.reducer)
         .then(function (response) {
           //this.setTasks(response.data)
           console.log(response);
-          //funzioni.seeAll()
           this.dispatch(tasksFetchSeeAll());
         })
         .catch(function (error) {
@@ -95,7 +94,6 @@ selector= useSelector(state=>state.reducer)
       axios.delete('http://localhost:3005/api/todo/del/' + id, {}, {})
         .then(function (response) {
           console.log(response);
-          //funzioni.deleteTasks(id);
           this.dispatch(tasksFetchCancel(id));
         })
         .catch(function (error) {
@@ -132,6 +130,42 @@ selector= useSelector(state=>state.reducer)
     />
   ))
 
+
+  visualizzaTodo = () => {//filtro
+    // contesto della funzione dentro
+    axios.get('http://localhost:3005/api/todos')
+      .then((response) => {
+
+        this.setState({ tasks: response.data })
+        // handle success
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  };
+
+
+  componentDidMount = () => {
+    //visualizza task che non hanno un determinato id "eliminato"
+    this.visualizzaTodo();
+    this.props.visualizzaTutto();
+  }
+
+  // funzioneDentro.bind(this)();
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.tasks.length !== prevState.tasks.length) {        //
+      this.listHeadingRef.current.focus();
+    }
+  }
+
+
+
   render = () => {
     
     const tasksNoun = this.taskList().length !== 1 ? 'tasks' : 'task';
@@ -148,7 +182,7 @@ selector= useSelector(state=>state.reducer)
           {headingText}
         </h2>
         <ul
-          role="list"
+         // role="list"
           className="todo-list stack-large stack-exception"
           aria-labelledby="list-heading"//
         >

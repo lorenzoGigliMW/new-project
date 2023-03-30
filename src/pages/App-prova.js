@@ -213,12 +213,8 @@ class App extends Component {
 
 
   componentDidMount = () => {
-
-
     //visualizza task che non hanno un determinato id "eliminato"
-
-    this.visualizzaTodo();//this.state.filter
-
+    this.visualizzaTodo();
   }
 
   // funzioneDentro.bind(this)();
